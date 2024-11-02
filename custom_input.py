@@ -39,10 +39,10 @@ def main():
 
     eps = int(input('Enter solution accuracy: '))
 
-    print('--> Solving with alpha 0.5')
+    print('--> Solving with alpha = 0.5')
     InteriorPointSolver(mode, x_0, c, a, b, 0.5, eps).solve()
 
-    print('--> Solving with alpha 0.9')
+    print('--> Solving with alpha = 0.9')
     InteriorPointSolver(mode, x_0, c, a, b, 0.9, eps).solve()
 
 

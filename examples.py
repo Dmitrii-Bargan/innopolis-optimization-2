@@ -84,7 +84,7 @@ def main() -> None:
         eps=5
     ).solve()
 
-    print("--> Example 6 - More variables. Taken from lab 2, task 1")
+    print("--> Example 3 - More variables. Taken from lab 2, task 1")
     print("Interior point alpha = 0.5: ")
     InteriorPointSolver(
         mode=InteriorPointSolver.Mode.MAXIMIZE,
@@ -130,7 +130,7 @@ def main() -> None:
         eps=5,
     ).solve()
 
-    print("--> Example 7 - Minimization, taken from tutorial")
+    print("--> Example 4 - Minimization, taken from tutorial")
     print("Interior point alpha = 0.5: ")
     solver = InteriorPointSolver(
         mode=InteriorPointSolver.Mode.MINIMIZE,

@@ -65,7 +65,7 @@ class InteriorPointSolver:
 
     def calculate(self):
         """
-        Perform one iteration of the Simplex method
+        Perform one iteration of the Interior point method
         :return: whether to continue iterating. [False] if this was the last step
         """
 
@@ -102,7 +102,7 @@ class InteriorPointSolver:
 
             if np.all(cp >= 0):
                 x = None
-                break  # Решение неограниченно, выход из функции
+                break  # Function is unbounded, leave method flow
 
             nu = np.absolute(np.min(cp))
             if nu < 1e-10:
@@ -123,8 +123,8 @@ class InteriorPointSolver:
     def solve(self) -> Union[tuple[float, list[float]], None]:
         """
         Solve the problem in this solver and print the solution and X*,
-        or "Unbounded" if the objective function is unbounded
-        :return: a tuple (solution, X*) or [None] if the objective function is unbounded
+        or print "The method is not applicable!" or "The problem has no solution!" in those special cases.
+        :return: a tuple (solution, X*) or [None] in special cases
         """
         x = self.calculate()
 
