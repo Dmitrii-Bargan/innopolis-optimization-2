@@ -3,8 +3,8 @@ from interior_point_solver import InteriorPointSolver
 
 
 def main() -> None:
-    print("Example 1")
-    print("Interior point alpha = 0,5: ")
+    print("--> Example 1")
+    print("Interior point alpha = 0.5: ")
     InteriorPointSolver(
         mode=InteriorPointSolver.Mode.MAXIMIZE,
         c=[9, 10, 16, 0, 0, 0],
@@ -18,8 +18,7 @@ def main() -> None:
         alpha=0.5,
         eps=5
     ).solve()
-
-    print("Interior point alpha = 0,9: ")
+    print("Interior point alpha = 0.9: ")
     InteriorPointSolver(
         mode=InteriorPointSolver.Mode.MAXIMIZE,
         c=[9, 10, 16, 0, 0, 0],
@@ -33,8 +32,6 @@ def main() -> None:
         alpha=0.9,
         eps=5
     ).solve()
-
-    print()
     print("Simplex: ")
     SimplexSolver(
         mode=SimplexSolver.Mode.MAXIMIZE,
@@ -48,10 +45,8 @@ def main() -> None:
         eps=5
     ).solve()
 
-    print()
     print("--> Example 2. An unbounded objective function")
-
-    print("Interior point alpha = 0,5: ")
+    print("Interior point alpha = 0.5: ")
     InteriorPointSolver(
         mode=InteriorPointSolver.Mode.MAXIMIZE,
         c=[5, 4, 0, 0],
@@ -64,8 +59,7 @@ def main() -> None:
         alpha=0.5,
         eps=5
     ).solve()
-
-    print("Interior point alpha = 0,9: ")
+    print("Interior point alpha = 0.9: ")
     InteriorPointSolver(
         mode=InteriorPointSolver.Mode.MAXIMIZE,
         c=[5, 4, 0, 0],
@@ -78,8 +72,6 @@ def main() -> None:
         alpha=0.9,
         eps=5
     ).solve()
-
-    print()
     print("Simplex: ")
     SimplexSolver(
         mode=SimplexSolver.Mode.MAXIMIZE,
@@ -93,8 +85,7 @@ def main() -> None:
     ).solve()
 
     print("--> Example 6 - More variables. Taken from lab 2, task 1")
-
-    print("Interior point alpha = 0,5: ")
+    print("Interior point alpha = 0.5: ")
     InteriorPointSolver(
         mode=InteriorPointSolver.Mode.MAXIMIZE,
         c=[100, 140, 120, 0, 0, 0, 0],
@@ -110,8 +101,7 @@ def main() -> None:
         eps=5
 
     ).solve()
-
-    print("Intetior point alpha = 0,9: ")
+    print("Interior point alpha = 0.9: ")
     InteriorPointSolver(
         mode=InteriorPointSolver.Mode.MAXIMIZE,
         c=[100, 140, 120, 0, 0, 0, 0],
@@ -126,7 +116,6 @@ def main() -> None:
         alpha=0.9,
         eps=5
     ).solve()
-
     print("Simplex: ")
     SimplexSolver(
         mode=SimplexSolver.Mode.MAXIMIZE,
@@ -142,7 +131,7 @@ def main() -> None:
     ).solve()
 
     print("--> Example 7 - Minimization, taken from tutorial")
-    print("Interior point alpha = 0,5: ")
+    print("Interior point alpha = 0.5: ")
     solver = InteriorPointSolver(
         mode=InteriorPointSolver.Mode.MINIMIZE,
         c=[-2, 2, -6, 0, 0, 0],
@@ -156,8 +145,7 @@ def main() -> None:
         alpha=0.5,
         eps=5
     ).solve()
-
-    print("Intetior point alpha = 0,9: ")
+    print("Interior point alpha = 0.9: ")
     InteriorPointSolver(
         mode=InteriorPointSolver.Mode.MINIMIZE,
         c=[-2, 2, -6, 0, 0, 0],
@@ -171,7 +159,6 @@ def main() -> None:
         alpha=0.9,
         eps=5
     ).solve()
-
     print("Simplex: ")
     SimplexSolver(
         mode=InteriorPointSolver.Mode.MINIMIZE,

@@ -152,54 +152,50 @@ class InteriorPointSolver:
             return None
 
 
-def interior_point_solve_and_check(
-        mode: InteriorPointSolver.Mode,
-        start: list[float],
-        objective_function: list[float],
-        constraints_matrix: list[list[float]],
-        constraints_right_hand_side: list[float],
-        alpha: float,
-        epsilon: int,
-        expected_solution: Union[float, None],
-) -> None:
-    """
-    Run the simplex solver with given data and assert-check the solution.
+def main() -> None:
+    while True:
+        mode = input('Maximization or minimization? [max|min|maximization|minimization|maximize|minimize]: ')
+        if mode in ['max', 'maximization', 'maximize']:
+            mode = InteriorPointSolver.Mode.MAXIMIZE
+            break
+        elif mode in ['min', 'minimization', 'minimize']:
+            mode = InteriorPointSolver.Mode.MINIMIZE
+            break
+        else:
+            print('Invalid input!')
 
-    :param mode: [InteriorPointSolver] mode on whether to minimize or maximize the function
-    :param objective_function: coefficients of the objective function F(x_1, ..., x_m) = 0
-    :param constraints_matrix: coefficients of constraints equations Q_i (x_1, ..., x_m) <= rhs_i
-    :param constraints_right_hand_side: results of the constraints equations
-    :param epsilon: optimization accuracy. Number of digits after the floating point to consider
-    :param expected_solution: the expected solution of the optimization problem
-    """
-    solver = InteriorPointSolver(mode, start, objective_function, constraints_matrix, constraints_right_hand_side,
-                                 alpha, epsilon)
-    solutions, x = solver.solve()
+    c = []
+    c_size = int(input('Size of the vector C: '))
+    print('Enter components of vector C (one on each line):')
+    for _ in range(c_size):
+        c.append(float(input()))
 
-    if solutions is None:  # Unbounded function
-        if expected_solution is not None:
-            raise ArithmeticError("Expected an unbounded function")
-    else:
-        if solutions[0] != expected_solution:
-            raise ArithmeticError(f"Expected solution {expected_solution}, got {solutions[0]}")
+    a = []
+    print('Constructing the matrix A:')
+    num_constraints = int(input('Number of constraints: '))
+    for i in range(num_constraints):
+        array = [float(x) for x in input(f'Enter values for constraint {i + 1} (space-separated): ').strip().split(' ')]
+        a.append(array)
 
-        answer = 0
-        for i in range(len(objective_function)):
-            answer += objective_function[i] * solutions[1][i]
+    b = []
+    print('Enter components of vector b:')
+    for _ in range(num_constraints):
+        b.append(float(input()))
 
-        if not isclose(answer, expected_solution, rel_tol=10 ** (-epsilon)):
-            raise ArithmeticError("X* coefficients do not produce expected solution")
+    x_size = int(input('Size of the vector x_0: '))
+    x_0 = []
+    print('Enter components of x_0: ')
+    for _ in range(x_size):
+        x_0.append(float(input()))
 
-        for i in range(len(constraints_right_hand_side)):
-            calculated = sum([constraints_matrix[i][j] * solutions[1][j] for j in range(len(solutions[1]))])
-            if calculated > constraints_right_hand_side[i]:
-                raise ArithmeticError(f"Produced X* does not match {i}-th constraint")
+    eps = int(input('Enter solution accuracy: '))
+
+    print('--> Solving with alpha 0.5')
+    InteriorPointSolver(mode, x_0, c, a, b, 0.5, eps).solve()
+
+    print('--> Solving with alpha 0.9')
+    InteriorPointSolver(mode, x_0, c, a, b, 0.9, eps).solve()
 
 
-def read_data():
-    _, ln_start, _, ln_C, _, *lns_A, _, ln_b = (ln.strip() for ln in stdin.readlines())
-    start = [float(x) for x in ln_start.strip().split()]
-    C = [float(x) for x in ln_C.strip().split()]
-    A = [[float(x) for x in ln.strip().split()] for ln in lns_A]
-    b = [float(x) for x in ln_b.strip().split()]
-    return C, A, b, start
+if __name__ == '__main__':
+    main()
