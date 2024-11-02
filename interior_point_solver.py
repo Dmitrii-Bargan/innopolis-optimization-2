@@ -72,7 +72,6 @@ class InteriorPointSolver:
         # Get the index of the pivot column
         x = self.start
         self.c = np.transpose(self.c)
-        exception = None
         i = 1
 
         while True:
@@ -85,13 +84,11 @@ class InteriorPointSolver:
 
             if np.any(np.isnan(f)) or np.any(np.isinf(f)):
                 x = None
-                exception = "The problem does not have solution!"
                 break
 
             if np.linalg.det(f) == 0:
                 x = None
                 self.is_not_applicable = True
-                exception = "The method is not applicable!"
                 break
 
             f_inverse = np.linalg.inv(f)
@@ -101,18 +98,16 @@ class InteriorPointSolver:
 
             if np.any(np.isnan(cp)) or np.any(np.isinf(cp)):
                 x = None
-                exception = "The problem does not have solution!"
                 break
 
             if np.all(cp >= 0):
                 x = None
-                exception = "The problem does not have solution!"
                 break  # Решение неограниченно, выход из функции
 
             nu = np.absolute(np.min(cp))
             if nu < 1e-10:
+                self.is_not_applicable = True
                 x = None
-                exception = "The problem does not have solution!"
                 break
 
             y = np.add(np.ones(len(self.c), float), (self.alpha / nu) * cp)
